@@ -1,4 +1,4 @@
-<div class="mx-auto w-full flex flex-col lg:flow-row pd-6">
+<div class="mx-auto w-full flex flex-col lg:flex-row pd-6">
   <div class="mx-auto w-full">
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
@@ -18,8 +18,14 @@
       </div>
       <%# pluralize(@course.lessons.count) dùng để thêm s hoặc k thêm nếu có ít hơn 1 lesson %>
       <span><%= @course.lessons.count %> <%= "lesson".pluralize(@course.lessons.count) %> </span>
+
+      <h1 class= "text-2xl font-bold"> <%= @course.title %> </h1>
+      <p class="text-gray-500 mt-2">
+        <%= @course.description %>
+      </p>
     </div>
-    
-    <%= link_to "Back to courses", courses_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
+    <div>
+      <%= render "sidebar" %>
+    </div>
 </div>
