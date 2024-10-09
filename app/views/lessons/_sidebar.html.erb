@@ -13,7 +13,10 @@
             <%= link_to course_lesson_path(course, lesson) do %>
                 <div class="border p-6 hover:bg-gray-200 <%= @lesson.id == lesson.id ? 'bg-amaranth-200' : '' %>">
                     <div>
-                        <%= icon('fa-solid', 'unlock', class: "mr-2 text-gray-200") %>
+                        <%= complete_lessons&.include?(lesson.id)? 
+                            icon('fa-solid', 'check-circle', class: "mr-2 text-green-500") :
+                             nil
+                        %>
                         <span class = "font-light">
                             <%= lesson.title %>
                         </span>

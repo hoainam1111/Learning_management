@@ -8,10 +8,25 @@
             </div>
             <div class = "p-4" >
                 <% if user_signed_in? %>
-                    <p class = "text-gray-700 text-base mb-4">
-                        Start the course and Learning all about the world of web dev!!!
-                    </p>
-                    <%= link_to "Start Course", course_lesson_path(@course, @course.first_lesson), class: "bg-revolver-600 hover:bg-revolver-800 text-white-50 font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline w-full transition ease-in-out duration-150" %>
+                    <% if @complete_lessons&.any? %>
+                        <% if @complete_lessons.count == @course.lessons.count %>
+                            <p class = "text-gray-700 text-base mb-4">
+                                You've completed this course!!!
+                            </p>
+                            <%= link_to "Watch Again", course_lesson_path(@course, @course.first_lesson), class: "bg-revolver-600 hover:bg-revolver-800 text-white-50 font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline w-full transition ease-in-out duration-150" %>
+                        <%else%>
+                            <p class = "text-gray-700 text-base mb-4">
+                                Continue course and pick up where you left off!!!
+                            </p>
+                            <%= link_to "Continue course", course_lesson_path(@course, @course.next_lesson(current_user)), class: "bg-revolver-600 hover:bg-revolver-800 text-white-50 font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline w-full transition ease-in-out duration-150" %>
+                        <%end%>
+                    <%else%>
+                        <p class = "text-gray-700 text-base mb-4">
+                            Start the course and Learning all about the world of web dev!!!
+                        </p>
+                        <%= link_to "Start Course", course_lesson_path(@course, @course.first_lesson), class: "bg-revolver-600 hover:bg-revolver-800 text-white-50 font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline w-full transition ease-in-out duration-150" %>
+                    <%end%>
+                    
                 <% else %>
                     <p class = "text-gray-700 text-base mb-4">
                         Sign up for free today and explore the world of web dev!!!

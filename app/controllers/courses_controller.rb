@@ -8,6 +8,9 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    # sử dụng toán tử & để kiểm tra nếu kết quả trả về là nil thì sẽ dừng mà k gây lôi
+    @complete_lessons = current_user&.lesson_users&.joins(:lesson)&.where(complete: true,
+    lesson: { course: @course })&.pluck(:lesson_id)
   end
 
   # GET /courses/new
