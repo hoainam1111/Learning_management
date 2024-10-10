@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   authenticated :admin_user do
     root to: "admin#index", as: :admin_root
   end
-
+  resources :checkouts, only: [ :create ]
   get "admin" => "admin#index"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

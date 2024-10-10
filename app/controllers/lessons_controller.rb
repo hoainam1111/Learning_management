@@ -7,6 +7,8 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1 or /lessons/1.json
   def show
+    # pluck(:lesson_id): Sau khi truy vấn và lọc, pluck sẽ lấy ra danh sách lesson_id của các bài học mà người dùng đã hoàn thành.
+
     @complete_lessons = current_user.lesson_users.where(complete: true).pluck(:lesson_id)
     @course = @lesson.course
   end

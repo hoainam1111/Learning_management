@@ -4,11 +4,21 @@ class CoursesController < ApplicationController
   # GET /courses or /courses.json
   def index
     @courses = Course.all
+    @user_started_courses = current_user&.lesson_users&.joins(:lesson)&.pluck(:course_id)&.uniq
+
+    if @user_started_courses.present?
+      @user_course_progresses = @user_started_courses.map do |course_id|
+        course_lessons = Course.find(course_id).lessons.count
+        complete_lessons = current_user&.lesson_users&.joins(:lesson)&.where(complete: true, lessons: { course: course_id })&.count
+        { course_id: course_id, complete_percentage: (complete_lessons.to_f / course_lessons.to_f * 100).to_i }
+      end
+    end
   end
 
   # GET /courses/1 or /courses/1.json
   def show
     # sử dụng toán tử & để kiểm tra nếu kết quả trả về là nil thì sẽ dừng mà k gây lôi
+    # oins(:lesson): Thực hiện phép nối (join) giữa bảng lesson_users và bảng lessons thông qua mối quan hệ giữa lesson_user và lesson.
     @complete_lessons = current_user&.lesson_users&.joins(:lesson)&.where(complete: true,
     lesson: { course: @course })&.pluck(:lesson_id)
   end
